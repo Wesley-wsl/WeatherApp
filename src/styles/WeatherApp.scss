@@ -1,36 +1,140 @@
 header > h1 {
     width: 100px;
-    font-size: 15px;
+    font-size: 19px;
     margin: 2rem;
-    color: black;
+    color: rgb(255, 255, 255);
     font-weight: 400;
 }
 
 .background {
-    background: url("../assets/snowy.jpg") no-repeat center center fixed;
+    background: url("../assets/cloudy.jpg") no-repeat;
+    background-attachment: fixed;
     background-size: cover;
     position: absolute;
-    width: 100vw;
+    top: 0;
+    z-index: -1;
+    width: 60%;
     height: 100vh;
+    filter: contrast(150%) sepia(60%);
+}
+
+#weather {
+    color: rgb(255, 255, 255);
+    position: absolute;
+    bottom: 80px;
+    left: 80px;
+    max-width: 360px;
+
+    div {
+        display: flex;
+        flex-wrap: wrap;
+        h2 {
+            font-size: 50px;
+
+            span {
+                font-size: 70px;
+            }
+        }
+
+        p {
+            margin-left: 20px;
+        }
+    }
 }
 
 .weatherInfo {
     position: absolute;
     top: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.63);
+    background-color: rgba(0, 0, 0, 0.164);
     width: 40%;
-    height: 100vh;
+    height: 100%;
+    box-shadow: -1px 0px 10px 0px black;
+    color: rgb(255, 255, 255);
 
-    &::after {
-        content: "";
-        background-image: url("../assets/snowy.jpg");
+    .background-info {
+        background-image: url("../assets/cloudy.jpg");
+        background-attachment: fixed;
         background-size: cover;
-        height: 100vh;
+        height: 100%;
         width: 100%;
         position: absolute;
         top: 0;
         right: 0;
-        filter: blur(10px);
+        z-index: -1;
+        filter: brightness(30%) contrast(150%) sepia(60%);
+    }
+
+    #search {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        input {
+            padding: 10px;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #fff;
+            width: 300px;
+            margin: 0 auto;
+            color: #fff;
+        }
+
+        button {
+            width: 90px;
+            height: 86px;
+            border: none;
+            cursor: pointer;
+            background-color: rgba(247, 169, 0, 0.705);
+            color: #fff;
+
+            i {
+                font-size: 26px;
+            }
+        }
+    }
+
+    #locations {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        max-width: 390px;
+        margin: 60px auto;
+
+        ul > li {
+            margin-bottom: 20px;
+            font-size: 15px;
+
+            &:nth-last-child(1) {
+                margin-bottom: 0px;
+            }
+        }
+    }
+
+    #details {
+        max-width: 390px;
+        margin: 0 auto;
+
+        p {
+            font-size: 17px;
+            font-weight: 500;
+            margin: 40px 0;
+        }
+
+        ul > li {
+            display: flex;
+            margin: 20px 0px;
+            font-size: 15px;
+            justify-content: space-between;
+
+            span {
+                display: flex;
+            }
+        }
+
+        hr {
+            border-color: #fff;
+            max-width: 100%;
+        }
     }
 }
