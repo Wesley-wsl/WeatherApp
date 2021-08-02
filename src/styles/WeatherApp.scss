@@ -6,15 +6,26 @@ header > h1 {
     font-weight: 400;
 }
 
+.cloudy {
+    background-image: url("../assets/cloudy.jpg");
+}
+
+.snowy {
+    background-image: url("../assets/snowy.jpg");
+}
+
+.black {
+    color: #000;
+}
+
 .background {
-    background: url("../assets/cloudy.jpg") no-repeat;
     background-attachment: fixed;
     background-size: cover;
     position: absolute;
     top: 0;
     z-index: -1;
     width: 60%;
-    height: 100vh;
+    height: 100%;
     filter: contrast(150%) sepia(60%);
 }
 
@@ -23,7 +34,7 @@ header > h1 {
     position: absolute;
     bottom: 80px;
     left: 80px;
-    max-width: 360px;
+    max-width: 490px;
 
     div {
         display: flex;
@@ -53,7 +64,6 @@ header > h1 {
     color: rgb(255, 255, 255);
 
     .background-info {
-        background-image: url("../assets/cloudy.jpg");
         background-attachment: fixed;
         background-size: cover;
         height: 100%;
@@ -64,6 +74,8 @@ header > h1 {
         z-index: -1;
         filter: brightness(30%) contrast(150%) sepia(60%);
     }
+
+
 
     #search {
         display: flex;
@@ -121,14 +133,18 @@ header > h1 {
             margin: 40px 0;
         }
 
-        ul > li {
-            display: flex;
-            margin: 20px 0px;
-            font-size: 15px;
-            justify-content: space-between;
+        ul {
+            // display: flex;
+            // flex-direction: column;
 
-            span {
+            li {
                 display: flex;
+                margin: 20px 0px;
+                font-size: 15px;
+                justify-content: space-between;
+                span {
+                    display: flex;
+                }
             }
         }
 
