@@ -6,6 +6,8 @@ function WeatherApp() {
     const [weather, setWeather] = useState({})
     const [name, setName] = useState('')
     const [exists, setExists] = useState(false)
+    let today = new Date();
+    let dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
     const api = {
         key: process.env.REACT_APP_OPEN_WEATHER_KEY,
@@ -14,7 +16,8 @@ function WeatherApp() {
         units: 'metric'
     }
 
-    async function searchWeather(city) {
+    async function searchWeather(e, city) {
+        e.preventDefault()
         await axios.get(`${api.base}weather?q=${city}&appid=${api.key}&${api.lang}&units=${api.units}`).then(res => {
             setWeather(res.data)
             setExists(true)
@@ -22,6 +25,7 @@ function WeatherApp() {
             setExists(false)
             console.log(error)
         })
+        setName('')
     }
 
 
@@ -44,12 +48,12 @@ function WeatherApp() {
                     {exists ?
                         <div>
                             <h2 className={`${weather.main.temp < 10 ? 'black' : ''}`}><span>{Math.round(weather.main.temp)}C°</span> {weather.name}</h2>
-                            <p className={`${weather.main.temp < 10 ? 'black' : ''}`}>06:09 - Sunday - 06 oct 21</p>
+                            <p className={`${weather.main.temp < 10 ? 'black' : ''}`}>{today.getHours()}:{today.getMinutes()} - {dayName[today.getDay()]} - {today.getDay()}/{today.getMonth()}/{today.getUTCFullYear()}</p>
                             <p className={`${weather.main.temp < 10 ? 'black' : ''}`}><i className="fas fa-cloud"></i> - {weather["weather"][0]["description"]}</p>
                         </div> :
                         <div>
                             <h2><span>C°</span> CityName</h2>
-                            <p>06:09 - Sunday - 06 oct 21</p>
+                            <p>{today.getHours()}:{today.getMinutes()} - {dayName[today.getDay()]} - {today.getDay()}/{today.getMonth()}/{today.getUTCFullYear()}</p>
                             <p><i className="fas fa-cloud"></i> - description</p>
                         </div>}
                 </section>
@@ -59,15 +63,17 @@ function WeatherApp() {
                         : <div className={`background-info cloudy`}></div>}
 
 
-                    <div id='search'>
-                        <input type="text" name="region" id="region" placeholder='Another location' value={name} onChange={event => setName(event.target.value)} />
-                        <button onClick={() => searchWeather(name)}><i className="fas fa-search"></i></button>
+                    <div>
+                        <form action="" id='search' onSubmit={(e) => searchWeather(e, name)}>
+                            <input type="text" name="region" id="region" placeholder='Another location' value={name} onChange={event => setName(event.target.value)} />
+                            <button><i className="fas fa-search"></i></button>
+                        </form>
                     </div>
 
                     <div id='locations'>
                         <ul>
-                            <li>Birmingham</li>
-                            <li>Manchester</li>
+                            <li>Brasília</li>
+                            <li>Canadá</li>
                             <li>New York</li>
                             <li>California</li>
                         </ul>
