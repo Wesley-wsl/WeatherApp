@@ -1,4 +1,4 @@
-import './styles/App.scss';
+import './styles/default.scss';
 import WeatherApp from './page/WheaterApp'
 import { BrowserRouter, Route } from 'react-router-dom'
 
