@@ -6,7 +6,7 @@
 
 ## About
 
-WeatherApp Web é um simples app de clima que usa a API OpenWeatherMap para buscar a temperatura de lugares do mundo e seus dados de clima, como: humidade, vento, pressão e temperatura.
+WeatherApp Web is a simple weather app that uses an OpenWeatherMap API to fetch the temperature of places in the world and their weather data such as: humidity, wind, pressure and temperature. 
 
 ## Technologies
 
