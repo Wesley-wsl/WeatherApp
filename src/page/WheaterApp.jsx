@@ -1,11 +1,13 @@
 import '../styles/WeatherApp.scss'
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function WeatherApp() {
     const [weather, setWeather] = useState({})
     const [name, setName] = useState('')
     const [exists, setExists] = useState(false)
+
+
     let today = new Date();
     let dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -16,7 +18,25 @@ function WeatherApp() {
         units: 'metric'
     }
 
-    async function searchWeather(e, city) {
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                console.log(position.coords.latitude, position.coords.longitude);
+                axios.get(`${api.base}weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${api.key}&${api.lang}&units=${api.units}`).then(res => {
+                    setWeather(res.data)
+                    setExists(true)
+                }).catch((error) => {
+                    setExists(false)
+                    console.log(error)
+                })
+            },
+            error => {
+                console.log("Error: ", error)
+            });
+    }, [])
+
+    async function searchWeather(e, city,) {
         e.preventDefault()
         await axios.get(`${api.base}weather?q=${city}&appid=${api.key}&${api.lang}&units=${api.units}`).then(res => {
             setWeather(res.data)
@@ -27,7 +47,6 @@ function WeatherApp() {
         })
         setName('')
     }
-
 
 
 
@@ -48,12 +67,12 @@ function WeatherApp() {
                     {exists ?
                         <div>
                             <h2 className={`${weather.main.temp < 10 ? 'black' : ''}`}><span>{Math.round(weather.main.temp)}C°</span> {weather.name}</h2>
-                            <p className={`${weather.main.temp < 10 ? 'black' : ''}`}>{today.getHours()}:{today.getMinutes()} - {dayName[today.getDay()]} - {today.getDay()}/{today.getMonth()}/{today.getUTCFullYear()}</p>
+                            <p className={`${weather.main.temp < 10 ? 'black' : ''}`}>{today.getHours()}:{today.getMinutes()} - {dayName[today.getDay()]} - {today.getDay() + 1}/{today.getMonth() + 1}/{today.getUTCFullYear()}</p>
                             <p className={`${weather.main.temp < 10 ? 'black' : ''}`}><i className="fas fa-cloud"></i> - {weather["weather"][0]["description"]}</p>
                         </div> :
                         <div>
                             <h2><span>C°</span> CityName</h2>
-                            <p>{today.getHours()}:{today.getMinutes()} - {dayName[today.getDay()]} - {today.getDay()}/{today.getMonth()}/{today.getUTCFullYear()}</p>
+                            <p>{today.getHours()}:{today.getMinutes()} - {dayName[today.getDay()]} - {today.getDay() + 1}/{today.getMonth() + 1}/{today.getUTCFullYear()}</p>
                             <p><i className="fas fa-cloud"></i> - description</p>
                         </div>}
                 </section>
