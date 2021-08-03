@@ -2,6 +2,8 @@
 
 <p align='center'> <img src='./src/assets/github/WeatherApp-Web.gif'/> </p>
 
+**Test yourself [here](https://weatherappwsl.netlify.app)**
+
 ## About
 
 WeatherApp Web é um simples app de clima que usa a API OpenWeatherMap para buscar a temperatura de lugares do mundo e seus dados de clima, como: humidade, vento, pressão e temperatura.
