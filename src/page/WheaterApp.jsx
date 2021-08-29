@@ -67,12 +67,12 @@ function WeatherApp() {
                     {exists ?
                         <div>
                             <h2 className={`${weather.main.temp < 10 ? 'black' : ''}`}><span>{Math.round(weather.main.temp)}C°</span> {weather.name}</h2>
-                            <p className={`${weather.main.temp < 10 ? 'black' : ''}`}>{today.getHours()}:{today.getMinutes()} - {dayName[today.getDay()]} - {today.getDay() + 1}/{today.getMonth() + 1}/{today.getUTCFullYear()}</p>
+                            <p className={`${weather.main.temp < 10 ? 'black' : ''}`}>{today.getHours()}:{today.getMinutes()} - {dayName[today.getDay()]} - {String(today.getDate()).padStart(2,'0')}/{String(today.getMonth() + 1).padStart(2, '0')}/{today.getUTCFullYear()}</p>
                             <p className={`${weather.main.temp < 10 ? 'black' : ''}`}><i className="fas fa-cloud"></i> - {weather["weather"][0]["description"]}</p>
                         </div> :
                         <div>
                             <h2><span>C°</span> CityName</h2>
-                            <p>{today.getHours()}:{today.getMinutes()} - {dayName[today.getDay()]} - {today.getDay() + 1}/{today.getMonth() + 1}/{today.getUTCFullYear()}</p>
+                            <p>{today.getHours()}:{today.getMinutes()} - {dayName[today.getDay()]} - {String(today.getDate()).padStart(2,'0')}/{String(today.getMonth() + 1).padStart(2, '0')}/{today.getUTCFullYear()}</p>
                             <p><i className="fas fa-cloud"></i> - description</p>
                         </div>}
                 </section>
@@ -130,9 +130,6 @@ function WeatherApp() {
                     }
                 </section>
             </main>
-
-
-
         </div>
     )
 }
