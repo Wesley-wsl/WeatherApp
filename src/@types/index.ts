@@ -16,3 +16,8 @@ export interface IWeather {
     };
     name: string;
 }
+
+export interface IWeatherProps {
+    data: IWeather;
+    tempLow: boolean;
+}
