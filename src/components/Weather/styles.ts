@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.section`
     color: ${({ color }) => color};
+    font-size: clamp(13px, 3vw, 16px);
     position: absolute;
     bottom: 80px;
     left: 80px;
@@ -10,11 +11,11 @@ export const Container = styled.section`
     display: flex;
     flex-wrap: wrap;
     h2 {
-        font-size: 50px;
+        font-size: clamp(35px, 5vw, 50px);
         width: 100%;
 
         span {
-            font-size: 70px;
+            font-size: clamp(45px, 6vw, 70px);
         }
     }
 
@@ -26,30 +27,8 @@ export const Container = styled.section`
         color: #fff;
     }
 
-    @media (max-width: 742px) {
-        font-size: 12px;
-        h2 {
-            font-size: 40px;
-            span {
-                font-size: 50px;
-            }
-        }
-    }
-
     @media (max-width: 500px) {
         bottom: 120px;
         left: 40px;
-    }
-
-    @media (max-width: 400px) {
-        font-size: 11px;
-
-        h2 {
-            font-size: 35px;
-
-            span {
-                font-size: 45px;
-            }
-        }
     }
 `;
