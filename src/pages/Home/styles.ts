@@ -134,7 +134,7 @@ export const SearchWeather = styled.form`
     }
 `;
 
-export const Details = styled.div`
+export const Details = styled.section`
     max-width: 390px;
     margin: 0 auto;
 
@@ -150,9 +150,6 @@ export const Details = styled.div`
         margin-bottom: 20px;
         font-size: 15px;
         justify-content: space-between;
-        span {
-            display: flex;
-        }
     }
 
     hr {
