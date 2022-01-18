@@ -1,192 +1,77 @@
-import axios from "axios";
 import React, { useState, useEffect, FormEvent } from "react";
 
 import { IWeather } from "../../@types";
+import Weather from "../../components/Weather";
+import { api, apiHelpers } from "../../services/api";
 import * as S from "./styles";
 
 const Home: React.FC = () => {
     const [weather, setWeather] = useState<IWeather>(Object);
     const [name, setName] = useState("");
-    const [exists, setExists] = useState(false);
-
-    const today = new Date();
-    const dayName = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ];
-
-    const api = {
-        key: process.env.REACT_APP_OPEN_WEATHER_KEY,
-        base: "https://api.openweathermap.org/data/2.5/",
-        lang: "pt-br",
-        units: "metric",
-    };
+    const [tempLow, setTempLow] = useState(false);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
             position => {
-                console.log(
-                    position.coords.latitude,
-                    position.coords.longitude,
-                );
-                axios
-                    .get(
-                        `${api.base}weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${api.key}&${api.lang}&units=${api.units}`,
-                    )
+                api.get(
+                    `weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiHelpers.key}&${apiHelpers.lang}&units=${apiHelpers.units}`,
+                )
                     .then(res => {
                         setWeather(res.data);
-                        setExists(true);
+                        setTempLow(res.data.main.temp < 10);
                     })
-                    .catch(error => {
-                        setExists(false);
-                        console.log(error);
-                    });
+                    .catch(error => console.log(error));
             },
-            error => {
-                console.log("Error: ", error);
-            },
+            error => console.log("Error: ", error),
         );
-    }, [api.base, api.key, api.lang, api.units]);
+    }, []);
 
     async function searchWeather(e: FormEvent<HTMLFormElement>, city: string) {
         e.preventDefault();
-        await axios
+        await api
             .get(
-                `${api.base}weather?q=${city}&appid=${api.key}&${api.lang}&units=${api.units}`,
+                `weather?q=${city}&appid=${apiHelpers.key}&${apiHelpers.lang}&units=${apiHelpers.units}`,
             )
             .then(res => {
                 setWeather(res.data);
-                setExists(true);
+                setTempLow(res.data.main.temp < 10);
             })
-            .catch(error => {
-                setExists(false);
-                console.log(error);
-            });
+            .catch(error => console.log(error));
         setName("");
     }
 
     return (
         <S.Container>
             <header>
-                {exists ? (
-                    <h1 className={`${weather.main.temp < 10 ? "black" : ""}`}>
-                        WeatherApp
-                    </h1>
-                ) : (
-                    <h1>WeatherApp</h1>
-                )}
+                <S.Logo color={tempLow ? "#000" : "#fff"}>WeatherApp</S.Logo>
             </header>
 
-            {exists ? (
-                <div
-                    className={`background ${
-                        weather.main.temp >= 10 ? "cloudy" : ""
-                    } ${weather.main.temp < 10 ? "snowy" : ""}`}
-                />
-            ) : (
-                <div className="background cloudy" />
-            )}
+            <S.Background className={tempLow ? "snowy" : "cloudy"} />
 
             <main>
-                <section id="weather">
-                    {exists ? (
-                        <div>
-                            <h2
-                                className={`${
-                                    weather.main.temp < 10 ? "black" : ""
-                                }`}
-                            >
-                                <span>{Math.round(weather.main.temp)}C°</span>{" "}
-                                {weather.name}
-                            </h2>
-                            <p
-                                className={`${
-                                    weather.main.temp < 10 ? "black" : ""
-                                }`}
-                            >
-                                {today.getHours()}:{today.getMinutes()} -{" "}
-                                {dayName[today.getDay()]} -{" "}
-                                {String(today.getDate()).padStart(2, "0")}/
-                                {String(today.getMonth() + 1).padStart(2, "0")}/
-                                {today.getUTCFullYear()}
-                            </p>
-                            <p
-                                className={`${
-                                    weather.main.temp < 10 ? "black" : ""
-                                }`}
-                            >
-                                <i className="fas fa-cloud" /> -{" "}
-                                {weather.weather[0].description}
-                            </p>
-                        </div>
-                    ) : (
-                        <div>
-                            <h2>
-                                <span>C°</span> CityName
-                            </h2>
-                            <p>
-                                {today.getHours()}:{today.getMinutes()} -{" "}
-                                {dayName[today.getDay()]} -{" "}
-                                {String(today.getDate()).padStart(2, "0")}/
-                                {String(today.getMonth() + 1).padStart(2, "0")}/
-                                {today.getUTCFullYear()}
-                            </p>
-                            <p>
-                                <i className="fas fa-cloud" /> - description
-                            </p>
-                        </div>
-                    )}
-                </section>
+                <Weather data={weather} tempLow={tempLow} />
 
-                <section className="weatherInfo">
-                    {exists ? (
-                        <div
-                            className={`background-info ${
-                                weather.main.temp >= 10 ? "cloudy" : ""
-                            } ${weather.main.temp < 10 ? "snowy" : ""}`}
+                <S.WeatherInfo>
+                    <S.BackgroundAside
+                        className={tempLow ? "snowy" : "cloudy"}
+                    />
+
+                    <S.SearchWeather onSubmit={e => searchWeather(e, name)}>
+                        <input
+                            type="text"
+                            name="region"
+                            id="region"
+                            placeholder="Another location"
+                            value={name}
+                            onChange={event => setName(event.target.value)}
                         />
-                    ) : (
-                        <div className="background-info cloudy" />
-                    )}
+                        <button type="submit" aria-label="search weather">
+                            <i className="fas fa-search" />
+                        </button>
+                    </S.SearchWeather>
 
-                    <div>
-                        <form
-                            action=""
-                            id="search"
-                            onSubmit={e => searchWeather(e, name)}
-                        >
-                            <input
-                                type="text"
-                                name="region"
-                                id="region"
-                                placeholder="Another location"
-                                value={name}
-                                onChange={event => setName(event.target.value)}
-                            />
-                            <button type="submit" aria-label="search weather">
-                                <i className="fas fa-search" />
-                            </button>
-                        </form>
-                    </div>
-
-                    <div id="locations">
-                        <ul>
-                            <li>Brasília</li>
-                            <li>Canadá</li>
-                            <li>New York</li>
-                            <li>California</li>
-                        </ul>
-                    </div>
-
-                    {exists ? (
-                        <div id="details">
-                            <hr />
-
+                    {weather.main ? (
+                        <S.Details>
                             <p>Weather Details</p>
 
                             <ul>
@@ -211,11 +96,9 @@ const Home: React.FC = () => {
                             </ul>
 
                             <hr />
-                        </div>
+                        </S.Details>
                     ) : (
-                        <div id="details">
-                            <hr />
-
+                        <S.Details>
                             <p>Weather Details</p>
 
                             <ul>
@@ -234,9 +117,9 @@ const Home: React.FC = () => {
                             </ul>
 
                             <hr />
-                        </div>
+                        </S.Details>
                     )}
-                </section>
+                </S.WeatherInfo>
             </main>
         </S.Container>
     );
