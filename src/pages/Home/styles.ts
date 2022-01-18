@@ -21,6 +21,23 @@ export const Logo = styled.h1`
     }
 `;
 
+export const Container = styled.div`
+    .cloudy {
+        background-image: url(${CloudyJPG});
+        @media (max-width: 830px) {
+            filter: brightness(50%) contrast(120%) sepia(20%);
+        }
+    }
+
+    .cloudy2 {
+        background-image: url(${CloudyJPG});
+    }
+
+    .snowy {
+        background-image: url(${SnowyJPG});
+    }
+`;
+
 export const Background = styled.div`
     background-attachment: fixed;
     background-size: cover;
@@ -51,6 +68,22 @@ export const BackgroundAside = styled.div`
         z-index: -10;
         width: 100%;
         filter: brightness(30%) contrast(150%) sepia(10%) saturate(70%);
+    }
+`;
+
+export const WeatherInfo = styled.section`
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.164);
+    width: 40%;
+    height: 100%;
+    box-shadow: -1px 0px 10px 0px black;
+    color: rgb(255, 255, 255);
+
+    @media (max-width: 830px) {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0);
     }
 `;
 
@@ -138,38 +171,5 @@ export const Details = styled.div`
                 margin-right: 15px;
             }
         }
-    }
-`;
-
-export const WeatherInfo = styled.section`
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.164);
-    width: 40%;
-    height: 100%;
-    box-shadow: -1px 0px 10px 0px black;
-    color: rgb(255, 255, 255);
-
-    @media (max-width: 830px) {
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0);
-    }
-`;
-
-export const Container = styled.div`
-    .cloudy {
-        background-image: url(${CloudyJPG});
-        @media (max-width: 830px) {
-            filter: brightness(50%) contrast(120%) sepia(20%);
-        }
-    }
-
-    .cloudy2 {
-        background-image: url(${CloudyJPG});
-    }
-
-    .snowy {
-        background-image: url(${SnowyJPG});
     }
 `;
