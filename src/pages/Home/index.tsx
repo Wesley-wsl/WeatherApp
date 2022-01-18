@@ -28,6 +28,10 @@ const Home: React.FC = () => {
 
     async function searchWeather(e: FormEvent<HTMLFormElement>, city: string) {
         e.preventDefault();
+        if (city.trim() === "") {
+            setName("");
+            return;
+        }
         await api
             .get(
                 `weather?q=${city}&appid=${apiHelpers.key}&${apiHelpers.lang}&units=${apiHelpers.units}`,
