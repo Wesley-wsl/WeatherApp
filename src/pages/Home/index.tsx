@@ -42,9 +42,7 @@ const Home: React.FC = () => {
 
     return (
         <S.Container>
-            <header>
-                <S.Logo color={tempLow ? "#000" : "#fff"}>WeatherApp</S.Logo>
-            </header>
+            <S.Logo color={tempLow ? "#000" : "#fff"}>WeatherApp</S.Logo>
 
             <S.Background className={tempLow ? "snowy" : "cloudy"} />
 
@@ -60,7 +58,6 @@ const Home: React.FC = () => {
                         <input
                             type="text"
                             name="region"
-                            id="region"
                             placeholder="Another location"
                             value={name}
                             onChange={event => setName(event.target.value)}
